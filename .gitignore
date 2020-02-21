@@ -1,0 +1,4 @@
+.idea
+/node_modules
+/src/config/sequelize.ts
+/src/config/config.json
