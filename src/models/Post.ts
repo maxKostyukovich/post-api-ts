@@ -3,7 +3,7 @@ import {
     BelongsTo,
     Column,
     CreatedAt,
-    ForeignKey,
+    ForeignKey, HasMany,
     Model,
     PrimaryKey,
     Scopes,
@@ -11,6 +11,7 @@ import {
     UpdatedAt
 } from "sequelize-typescript";
 import {User} from './User'
+import {Comment} from "./Comment";
 
 @Scopes(() => ({
 
@@ -43,6 +44,14 @@ export class Post extends Model<Post> {
 
     @BelongsTo(() => User)
     user!: User;
+
+
+    @HasMany(() => Comment, {
+        foreignKey: 'PostId',
+        onDelete: 'CASCADE',
+        hooks: true,
+    })
+    comments?: Comment[];
 
     @CreatedAt
     @Column

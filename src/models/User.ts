@@ -35,27 +35,56 @@ export class User extends Model<User> {
     @Column
     password!: string;
 
-    @Column
+    @Column({
+        defaultValue: false
+    })
     isPaid!: boolean;
 
     @ForeignKey(() => Profile)
-    @Column
+    @Column({
+        references:{
+            key: 'id',
+            model: 'Profiles'
+        },
+        onDelete: "CASCADE"
+    })
     ProfileId!: number;
 
-    @BelongsTo(() => Profile)
+    @BelongsTo(() => Profile, {
+        foreignKey: 'ProfileId'
+        }
+    )
     profile?:Profile;
 
+
     @ForeignKey(() => CreditCard)
-    @Column
+    @Column({
+        references:{
+            key: 'id',
+            model: 'CreditCards'
+        },
+        onDelete: "CASCADE"
+
+    })
     CreditCardId?: number;
 
-    @BelongsTo(() => CreditCard)
+    @BelongsTo(() => CreditCard, {
+        foreignKey: 'CreditCardId'
+    })
     creditCard?: CreditCard;
 
-    @HasMany(() => Post, 'UserId')
+    @HasMany(() => Post, {
+        foreignKey: 'UserId',
+        onDelete: 'cascade',
+        hooks: true
+    })
     posts?: Post[];
 
-    @HasMany(() => Comment, 'CommentId')
+    @HasMany(() => Comment, {
+        foreignKey: 'CommentId',
+        onDelete: 'cascade',
+        hooks: true
+    })
     comments?: Comment[];
 
     @CreatedAt
@@ -65,5 +94,4 @@ export class User extends Model<User> {
     @UpdatedAt
     @Column
     updatedAt!: Date;
-
 }

@@ -1,7 +1,8 @@
 import bcrypt from 'bcryptjs'
+import {Response, Request, NextFunction} from 'express'
 import {SALT} from "../constants";
 
-module.exports = async (req, res, next) => {
+export const hashPassMiddleware = async (req: Request, res: Response, next: NextFunction) => {
     if(req.body.password) {
         const password: string = req.body.password;
         bcrypt.hash(req.body.password, SALT, (err, hash) => {
@@ -13,6 +14,4 @@ module.exports = async (req, res, next) => {
             }
         })
     }
-
-
 };
