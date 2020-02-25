@@ -16,12 +16,15 @@ import {Profile} from './Profile'
 import {CreditCard} from "./CreditCard";
 import {Post} from './Post'
 import {Comment} from "./Comment";
+import {ResetToken} from "./ResetToken";
+import {HasOneSetAssociationMixin} from "sequelize";
 
 @Scopes(() => ({
 
 }))
 @Table
 export class User extends Model<User> {
+    public setResetToken!: HasOneSetAssociationMixin<ResetToken, number>;
     @PrimaryKey
     @AutoIncrement
     @Column
@@ -47,6 +50,14 @@ export class User extends Model<User> {
         }
     )
     profile?:Profile;
+
+    @HasOne(() => ResetToken, {
+            foreignKey: 'UserId',
+            onDelete: 'CASCADE',
+            hooks: true
+        }
+    )
+    resetToken?:ResetToken;
 
     @HasOne(() => CreditCard, {
         foreignKey: 'UserId',

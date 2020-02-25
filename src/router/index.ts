@@ -5,6 +5,7 @@ import multer from "multer";
 import CreditCardController from "../controllers/CreditCardController";
 import PostController from '../controllers/PostController'
 import CommentController from "../controllers/CommentController";
+import AuthController from "../controllers/AuthController";
 import {hashPassMiddleware} from '../middlewares/hashPasswordMiddleware'
 import {accessTokenVerify} from "../middlewares/tokenVerifyMiddleware";
 import {createDiskStorageConfig} from '../middlewares/multer'
@@ -20,7 +21,9 @@ const upload = multer({storage : createDiskStorageConfig(multer, __dirname, '/..
 const router = Router();
 
 router.post('/user', validation(ValidationUser.create),hashPassMiddleware, UserController.create);
-router.post('/login', validation(ValidationUser.login), UserController.login);
+
+router.post('/reset', AuthController.getResetTokenOnEmail);
+router.post('/login', validation(ValidationUser.login), AuthController.login);
 router.delete('/user/:id', UserController.delete);
 
 router.post('/profile', validation(ValidationProfile.create), accessTokenVerify,  Profile.create);

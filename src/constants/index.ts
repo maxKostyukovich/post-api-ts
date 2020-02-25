@@ -5,6 +5,10 @@ export const JWT: any = {
     access: {
         type: 'access',
         expiresIn: '120m',
+    },
+    email: {
+        type: 'email',
+        expiresIn: '10m'
     }
 };
 export const MULTER_TIME_FORMAT = 'x';

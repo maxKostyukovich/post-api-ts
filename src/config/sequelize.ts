@@ -4,6 +4,7 @@ import {Comment} from "../models/Comment";
 import {CreditCard} from "../models/CreditCard";
 import {Post} from "../models/Post";
 import {Profile} from "../models/Profile";
+import {ResetToken} from "../models/ResetToken";
 
 
 const sequelize =  new Sequelize({
@@ -15,7 +16,7 @@ const sequelize =  new Sequelize({
     models: [__dirname + '/models'],
 });
 
-sequelize.addModels([User, Comment, CreditCard, Post, Profile]);
+sequelize.addModels([User, Comment, CreditCard, Post, Profile, ResetToken]);
 
 export default sequelize;
 

@@ -17,23 +17,23 @@ class UserController {
         }
     };
 
-    static login = async (req: Request, res: Response, next: NextFunction) => {
-        try {
-            const noHashPassword = req.body.password;
-            const user = await User.findOne({where: {email: req.body.email}});
-            if (!user) {
-                return next(new UnauthorizedError('Invalid credentials'))
-            }
-            const isValid = bcrypt.compareSync(noHashPassword, user.password);
-            if (!isValid) {
-                return next(new UnauthorizedError('Invalid credentials'))
-            }
-            const accessToken =  generateAccessToken(user.id);
-            res.send({user, accessToken});
-        } catch (e) {
-            next(e);
-        }
-    };
+    // static login = async (req: Request, res: Response, next: NextFunction) => {
+    //     try {
+    //         const noHashPassword = req.body.password;
+    //         const user = await User.findOne({where: {email: req.body.email}});
+    //         if (!user) {
+    //             return next(new UnauthorizedError('Invalid credentials'))
+    //         }
+    //         const isValid = bcrypt.compareSync(noHashPassword, user.password);
+    //         if (!isValid) {
+    //             return next(new UnauthorizedError('Invalid credentials'))
+    //         }
+    //         const accessToken =  generateAccessToken(user.id);
+    //         res.send({user, accessToken});
+    //     } catch (e) {
+    //         next(e);
+    //     }
+    // };
 
     static delete = async (req: Request, res: Response, next: NextFunction) => {
         try {
