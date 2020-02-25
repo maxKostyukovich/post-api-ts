@@ -8,6 +8,5 @@ export const generateAccessToken = (id: number) => {
     };
     const options = { expiresIn: JWT.access.expiresIn };
     const token = jwt.sign(payload, JWT.secretKey, options);
-    console.log(token);
     return token
 };

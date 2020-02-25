@@ -1,7 +1,6 @@
-import {Request, Response, NextFunction} from 'express'
+import {NextFunction, Request, Response} from 'express'
 import {generateAccessToken} from "../utils/generateToken";
 import UnauthorizedError from '../errorHandlers/UnauthorizedError'
-import Sequelize from "../config/sequelize";
 import bcrypt from 'bcryptjs'
 import {User} from "../models/User";
 

@@ -12,9 +12,22 @@ import {
 } from "sequelize-typescript";
 import {User} from './User'
 import {Comment} from "./Comment";
+import {DefaultScope} from "sequelize-typescript/dist/scopes";
 
+@DefaultScope({
+    attributes: ['id', 'title', 'description', 'date', 'topic', 'mainImg', 'UserId']
+})
 @Scopes(() => ({
-
+    topic(topic){
+        if(!topic){
+            return {};
+        }
+        return {
+            where: {
+                topic
+            }
+        }
+    }
 }))
 @Table
 export class Post extends Model<Post> {

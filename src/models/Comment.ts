@@ -30,14 +30,26 @@ export class Comment extends Model<Comment> {
     date!: string;
 
     @ForeignKey(() => User)
-    @Column
+    @Column({
+        references:{
+            key: 'id',
+            model: 'Users'
+        },
+        onDelete: "CASCADE"
+    })
     UserId!: number;
 
     @BelongsTo(() => User)
     user!: User;
 
     @ForeignKey(() => Post)
-    @Column
+    @Column({
+        references:{
+            key: 'id',
+            model: 'Posts'
+        },
+        onDelete: "CASCADE"
+    })
     PostId!: number;
 
     @BelongsTo(() => Post)

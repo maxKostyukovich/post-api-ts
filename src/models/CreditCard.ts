@@ -1,4 +1,15 @@
-import {Model, Column, Table, Scopes, CreatedAt, UpdatedAt, HasOne, PrimaryKey, AutoIncrement} from "sequelize-typescript";
+import {
+    Model,
+    Column,
+    Table,
+    Scopes,
+    CreatedAt,
+    UpdatedAt,
+    HasOne,
+    PrimaryKey,
+    AutoIncrement,
+    BelongsTo, ForeignKey
+} from "sequelize-typescript";
 import {User} from './User'
 import {HasOneSetAssociationMixin} from "sequelize";
 
@@ -23,10 +34,18 @@ export class CreditCard extends Model<CreditCard> {
     @Column
     expirationDate!: string;
 
-    @HasOne(() => User, {
+    @ForeignKey(() => User)
+    @Column({
+        references:{
+            key: 'id',
+            model: 'Users'
+        },
+        onDelete: "CASCADE"
+    })
+    UserId!: number;
+
+    @BelongsTo(() => User, {
         onDelete: 'CASCADE',
-        hooks: true,
-        foreignKey: 'CreditCardId'
     })
     user!: User;
 

@@ -8,3 +8,4 @@ export const JWT: any = {
     }
 };
 export const MULTER_TIME_FORMAT = 'x';
+export const POST_IMAGES_PATH = '/static/postImages/';

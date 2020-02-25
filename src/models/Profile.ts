@@ -1,4 +1,16 @@
-import {Model, Column, Table, Scopes, CreatedAt, UpdatedAt, HasOne, PrimaryKey, AutoIncrement} from "sequelize-typescript";
+import {
+    Model,
+    Column,
+    Table,
+    Scopes,
+    CreatedAt,
+    UpdatedAt,
+    HasOne,
+    PrimaryKey,
+    AutoIncrement,
+    BelongsTo,
+    ForeignKey
+} from "sequelize-typescript";
 import {User} from './User'
 import {HasOneSetAssociationMixin} from "sequelize";
 @Scopes(() => ({
@@ -25,10 +37,17 @@ export class Profile extends Model<Profile> {
     @Column
     country?: string;
 
-    @HasOne(() => User, {
-        foreignKey:'ProfileId',
-        onDelete: 'CASCADE',
-        hooks: true
+    @ForeignKey(() => User)
+    @Column({
+        references:{
+            key: 'id',
+            model: 'Users'
+        },
+        onDelete: "CASCADE"
+    })
+    UserId!: number;
+
+    @BelongsTo(() => User, {
     })
     user!: User;
 

@@ -6,10 +6,10 @@ import {errorHandler} from './errorHandlers/errorHandler'
 import router from "./router";
 const app: express.Application = express();
 
-
+app.use('/static',express.static(process.cwd() + '/public/static/images'));
+app.use(cors());
 app.use(cors());
 app.use(express.json());
-
 
 
 app.use('/api',router);

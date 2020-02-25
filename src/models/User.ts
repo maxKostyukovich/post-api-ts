@@ -10,7 +10,7 @@ import {
     HasMany,
     Unique,
     PrimaryKey,
-    AutoIncrement
+    AutoIncrement, HasOne
 } from "sequelize-typescript";
 import {Profile} from './Profile'
 import {CreditCard} from "./CreditCard";
@@ -40,36 +40,18 @@ export class User extends Model<User> {
     })
     isPaid!: boolean;
 
-    @ForeignKey(() => Profile)
-    @Column({
-        references:{
-            key: 'id',
-            model: 'Profiles'
-        },
-        onDelete: "CASCADE"
-    })
-    ProfileId!: number;
-
-    @BelongsTo(() => Profile, {
-        foreignKey: 'ProfileId'
+    @HasOne(() => Profile, {
+        foreignKey: 'UserId',
+        onDelete: 'CASCADE',
+        hooks: true
         }
     )
     profile?:Profile;
 
-
-    @ForeignKey(() => CreditCard)
-    @Column({
-        references:{
-            key: 'id',
-            model: 'CreditCards'
-        },
-        onDelete: "CASCADE"
-
-    })
-    CreditCardId?: number;
-
-    @BelongsTo(() => CreditCard, {
-        foreignKey: 'CreditCardId'
+    @HasOne(() => CreditCard, {
+        foreignKey: 'UserId',
+        onDelete: 'CASCADE',
+        hooks: true
     })
     creditCard?: CreditCard;
 
@@ -81,7 +63,7 @@ export class User extends Model<User> {
     posts?: Post[];
 
     @HasMany(() => Comment, {
-        foreignKey: 'CommentId',
+        foreignKey: 'UserId',
         onDelete: 'cascade',
         hooks: true
     })
